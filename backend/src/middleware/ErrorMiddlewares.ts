@@ -13,7 +13,7 @@ const errorMiddleware = (error: unknown, req: Request, res: Response, next: Next
         errMessage = error.message
         statusCode = error.statusCode
     }
-    res.status(statusCode).json({ code: statusCode, error: errMessage})
+    res.status(statusCode).json({code: statusCode, error: errMessage})
 }
 
-export { notFoundMiddleware, errorMiddleware }
+export {notFoundMiddleware, errorMiddleware}

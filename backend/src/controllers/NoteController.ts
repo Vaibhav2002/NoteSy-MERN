@@ -27,8 +27,8 @@ const createNote: RequestHandler<unknown, unknown, NoteRequest, unknown> = async
     }
 }
 
-interface NoteIdParam{
-    noteId:string
+interface NoteIdParam {
+    noteId: string
 }
 
 const updateNote: RequestHandler<NoteIdParam, unknown, NoteRequest, unknown> = async (req, res, next) => {

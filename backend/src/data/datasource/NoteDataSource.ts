@@ -29,9 +29,9 @@ const updateNote = async (noteId: string, noteBody: NoteRequest) => {
     return await note.save()
 }
 
-const deleteNote = async (noteId:string) => {
-    if(!mongoose.isValidObjectId(noteId)) throw createHttpError(200, "Invalid Note Id")
+const deleteNote = async (noteId: string) => {
+    if (!mongoose.isValidObjectId(noteId)) throw createHttpError(200, "Invalid Note Id")
     await NoteModel.findByIdAndDelete(noteId)
 }
 
-export { getNotes, createNote, updateNote, deleteNote }
+export {getNotes, createNote, updateNote, deleteNote}
