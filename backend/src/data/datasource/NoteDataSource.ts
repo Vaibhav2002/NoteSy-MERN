@@ -2,12 +2,14 @@ import NoteModel from "../models/entities/NoteEntity";
 import NoteRequest from "../models/requests/NoteRequest";
 import mongoose from "mongoose";
 import createHttpError from "http-errors";
+import {Labels} from "../models/Labels";
 
 const getNotes = async () => {
     return await NoteModel.find().exec();
 }
 
 const createNote = async (noteBody: NoteRequest) => {
+    if(noteBody.label && noteBody.label !in Labels) throw createHttpError("Invalid Label")
     return await NoteModel.create({
         title: noteBody.title,
         content: noteBody.content,
@@ -17,7 +19,7 @@ const createNote = async (noteBody: NoteRequest) => {
 }
 
 const updateNote = async (noteId: string, noteBody: NoteRequest) => {
-    if (!mongoose.isValidObjectId(noteId)) throw createHttpError(200, "Invalid Note Id")
+    if (!mongoose.isValidObjectId(noteId)) throw createHttpError(400, "Invalid Note Id")
     const note = await NoteModel.findById(noteId).exec()
     if (!note) throw createHttpError(200, "Note not found")
 
@@ -30,7 +32,7 @@ const updateNote = async (noteId: string, noteBody: NoteRequest) => {
 }
 
 const deleteNote = async (noteId: string) => {
-    if (!mongoose.isValidObjectId(noteId)) throw createHttpError(200, "Invalid Note Id")
+    if (!mongoose.isValidObjectId(noteId)) throw createHttpError(400, "Invalid Note Id")
     await NoteModel.findByIdAndDelete(noteId)
 }
 
