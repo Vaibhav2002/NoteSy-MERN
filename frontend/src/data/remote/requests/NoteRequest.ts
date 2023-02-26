@@ -1,4 +1,4 @@
-import {Labels} from "../Labels";
+import {Labels} from "../../models/Labels"
 
 export default interface NoteRequest {
     title: string,
