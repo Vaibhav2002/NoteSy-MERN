@@ -1,0 +1,8 @@
+.note_card{
+    height: 300px;
+    width: 200px;
+}
+
+.note_card--content{
+    padding: 16px;
+}
