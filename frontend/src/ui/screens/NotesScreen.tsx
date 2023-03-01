@@ -24,7 +24,7 @@ const NotesScreen = () => {
     const notesGrid =
         <Grid container spacing={{xs: 3, md: 2}} columns={{xs: 2, sm: 4, md: 8}}>
             {notes.map(note => (
-                <Grid xs={1} sm={2} md={3} key={note._id}>
+                <Grid key={note._id}>
                     <NoteItem note={note}/>
                 </Grid>
             ))}

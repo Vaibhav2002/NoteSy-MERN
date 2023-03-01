@@ -1,6 +1,9 @@
 .note_card{
-    height: 300px;
-    width: 200px;
+    height: 200px;
+    width: auto;
+    min-width: 70px;
+    aspect-ratio: 1.33;
+    position: relative;
 }
 
 .note_card--content{
