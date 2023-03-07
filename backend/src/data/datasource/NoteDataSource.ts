@@ -2,14 +2,15 @@ import NoteModel from "../models/entities/NoteEntity";
 import NoteRequest from "../models/requests/NoteRequest";
 import mongoose from "mongoose";
 import createHttpError from "http-errors";
-import {Labels} from "../models/Labels";
+import {fromLabelText, Labels} from "../models/Labels";
 
 const getNotes = async () => {
     return await NoteModel.find().exec();
 }
 
 const createNote = async (noteBody: NoteRequest) => {
-    if(noteBody.label && noteBody.label !in Labels) throw createHttpError("Invalid Label")
+    const label = fromLabelText(noteBody.label)
+    if(!label) throw createHttpError("Invalid Label")
     return await NoteModel.create({
         title: noteBody.title,
         content: noteBody.content,
@@ -20,13 +21,17 @@ const createNote = async (noteBody: NoteRequest) => {
 
 const updateNote = async (noteId: string, noteBody: NoteRequest) => {
     if (!mongoose.isValidObjectId(noteId)) throw createHttpError(400, "Invalid Note Id")
+
     const note = await NoteModel.findById(noteId).exec()
     if (!note) throw createHttpError(200, "Note not found")
+
+    const label = fromLabelText(noteBody.label)
+    if(!label) throw createHttpError("Invalid Label")
 
     note.title = noteBody.title
     note.content = noteBody.content
     note.color = noteBody.color
-    note.label = noteBody.label
+    note.label = label
 
     return await note.save()
 }
