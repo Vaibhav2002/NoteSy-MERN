@@ -1,0 +1,21 @@
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal_content {
+    width: 40%;
+    background: white;
+    border: 0;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.modal_title{
+    text-align: center;
+}
+
+.modal_save-btn{
+    padding: 32px;
+}

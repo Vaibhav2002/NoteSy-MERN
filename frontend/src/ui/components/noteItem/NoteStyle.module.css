@@ -4,8 +4,16 @@
     min-width: 70px;
     aspect-ratio: 1.33;
     position: relative;
+    display: flex;
 }
 
 .note_card--content{
+    height: 100%;
+}
+
+.note-timestamp{
+    position: absolute;
+    bottom: 0;
+    right: 0;
     padding: 16px;
 }
