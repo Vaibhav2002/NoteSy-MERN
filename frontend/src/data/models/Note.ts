@@ -5,7 +5,7 @@ export default interface Note {
     title: string
     content: string
     color: string
-    label?: Labels
+    label: Labels
     createdAt: string
     updatedAt?: string
 }

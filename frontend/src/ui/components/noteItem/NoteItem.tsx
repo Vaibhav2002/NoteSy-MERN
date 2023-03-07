@@ -9,14 +9,15 @@ import formatDate from "../../../util/DateFormatter";
 
 interface NoteItemProps {
     note: Note
+    onClick:(note:Note) => void
 }
 
-const NoteItem = ({note}: NoteItemProps) => {
+const NoteItem = ({note, onClick}: NoteItemProps) => {
     let time = `Created: ${formatDate(note.createdAt)}`
     if (note.updatedAt != undefined)
         time = `Updated: ${formatDate(note.updatedAt)}`
     return (
-        <Card className={styles.note_card}>
+        <Card className={styles.note_card} onClick={ () => onClick(note) }>
             <CardContent className={styles.note_cardContent}>
                 <Typography variant="h6" mr={3}>
                     {note.title}

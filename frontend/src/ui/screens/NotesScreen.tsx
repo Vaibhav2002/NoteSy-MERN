@@ -11,6 +11,7 @@ import styles from "./NoteScreen.module.css"
 const NotesScreen = () => {
     const [notes, setNotes] = useState<Note[]>([])
     const [isModalOpen, setModalOpen] = useState(false)
+    const [noteToEdit, setNoteToEdit] = useState<Note | undefined>(undefined)
 
     async function fetchNotes() {
         try {
@@ -29,12 +30,16 @@ const NotesScreen = () => {
         loadNotes()
     }, []);
 
-
     const notesGrid =
         <Grid container spacing={{xs: 3, md: 2}} columns={{xs: 2, sm: 4, md: 8}}>
             {notes.map(note => (
                 <Grid key={note._id}>
-                    <NoteItem note={note}/>
+                    <NoteItem
+                        note={note}
+                        onClick={ clickedNote =>
+                            setNoteToEdit(clickedNote)
+                        }
+                    />
                 </Grid>
             ))}
         </Grid>
@@ -45,13 +50,24 @@ const NotesScreen = () => {
                 <Box p={2}>{notesGrid}</Box>
                 {isModalOpen && <AddEditNoteModal
                     onNoteSave={note => {
-                        alert(JSON.stringify(note))
                         setModalOpen(false)
                         setNotes([...notes, note]);
                     }
                     }
                     onDismiss={() => {
                         setModalOpen(false)
+                    }}
+                />
+                }
+                {noteToEdit && <AddEditNoteModal
+                    note = {noteToEdit}
+                    onNoteSave={newNote => {
+                        setNotes(notes.map( note => (note._id === newNote._id)? newNote : note))
+                        setNoteToEdit(undefined)
+                    }
+                    }
+                    onDismiss={() => {
+                        setNoteToEdit(undefined)
                     }}
                 />
                 }

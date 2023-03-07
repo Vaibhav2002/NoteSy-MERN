@@ -17,8 +17,16 @@ interface AddEditNoteProps {
 }
 
 const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
+    console.log(` Original ${note?.label?.label}`)
+    const {control, handleSubmit, formState: {errors, isSubmitting}} = useForm<NoteInput>({
+        defaultValues:{
+            title: note?.title ?? "",
+            content: note?.content ?? "",
+            label: note?.label?.label ?? ""
+        }
+    })
 
-    const {control, handleSubmit, formState: {errors, isSubmitting}} = useForm<NoteInput>()
+    console.log(`Default ${control._defaultValues.label}`)
     let header = "Create Note"
     if (note) header = "Edit Note"
     const allLabels = labels
@@ -52,7 +60,7 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
                         <Stack direction="column" gap={2}>
                             <Controller
                                 name="title"
-                                defaultValue={""}
+                                defaultValue={control._defaultValues.title}
                                 rules={{required: "Title is required"}}
                                 control={control}
                                 render={({field: {onChange, value}}) =>
@@ -67,7 +75,7 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
                             />
                             <Controller
                                 name="content"
-                                defaultValue={""}
+                                defaultValue={control._defaultValues.content}
                                 rules={{required: "Content is required"}}
                                 control={control}
                                 render={({field: {onChange, value}}) =>
@@ -85,7 +93,7 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
                             />
                             <Controller
                                 name="label"
-                                defaultValue={Labels.Home.label}
+                                defaultValue={control._defaultValues.label}
                                 control={control}
                                 render={({field: {onChange, value}}) =>
                                     <FormControl>
