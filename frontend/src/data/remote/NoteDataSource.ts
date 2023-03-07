@@ -38,7 +38,7 @@ export async function updateNote(
         color: label.color,
         label: label.label
     }
-    return await apiCall(`notesEndpoint/${noteId}`, {
+    return await apiCall(`${notesEndpoint}/${noteId}`, {
         method: 'PUT',
         headers: {'Content-Type': "application/json"},
         body: JSON.stringify(noteReq)
