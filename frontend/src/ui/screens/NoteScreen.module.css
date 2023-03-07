@@ -1,0 +1,10 @@
+.noteScreen{
+    position: relative;
+    height: 100vh;
+}
+
+.addNoteFab{
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+}
