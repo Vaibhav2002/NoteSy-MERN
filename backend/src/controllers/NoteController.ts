@@ -16,9 +16,9 @@ const createNote: RequestHandler<unknown, unknown, NoteRequest, unknown> = async
     try {
         const noteReq = req.body
 
-        if (!noteReq.title) throw createHttpError(200, "Note must have a title")
-        if (!noteReq.content) throw createHttpError(200, "Note must have a content")
-        if (!noteReq.color) throw createHttpError(200, "Note must have a color")
+        if (!noteReq.title) throw createHttpError(400, "Note must have a title")
+        if (!noteReq.content) throw createHttpError(400, "Note must have a content")
+        if (!noteReq.color) throw createHttpError(400, "Note must have a color")
 
         const note = await dataSource.createNote(noteReq)
         res.status(200).json(note)
@@ -36,9 +36,9 @@ const updateNote: RequestHandler<NoteIdParam, unknown, NoteRequest, unknown> = a
         const noteReq = req.body
         const noteId = req.params.noteId
 
-        if (!noteReq.title) throw createHttpError(200, "Note must have a title")
-        if (!noteReq.content) throw createHttpError(200, "Note must have a content")
-        if (!noteReq.color) throw createHttpError(200, "Note must have a color")
+        if (!noteReq.title) throw createHttpError(400, "Note must have a title")
+        if (!noteReq.content) throw createHttpError(400, "Note must have a content")
+        if (!noteReq.color) throw createHttpError(400, "Note must have a color")
 
         const note = await dataSource.updateNote(noteId, noteReq)
         res.status(200).json(note)
