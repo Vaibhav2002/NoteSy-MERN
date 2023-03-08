@@ -1,12 +1,12 @@
 import React from 'react';
-import Note from "../../../data/models/Note";
-import {fromLabelText, Labels, labels} from "../../../data/models/Labels";
+import {Labels, labels} from "../../../data/models/Labels";
 import {Controller, useForm} from "react-hook-form"
 import {Box, Button, FormControl, InputLabel, MenuItem, Modal, Select, Stack, TextField} from "@mui/material";
 import styles from './AddEditNoteModal.module.css'
 import Typography from "@mui/material/Typography";
 import {createNote, updateNote} from "../../../data/remote/NoteDataSource";
 import NoteInput from "./NoteInput";
+import Note from "../../../data/models/Note";
 
 interface AddEditNoteProps {
     note?: Note
@@ -17,16 +17,14 @@ interface AddEditNoteProps {
 }
 
 const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
-    console.log(` Original ${note?.label?.label}`)
     const {control, handleSubmit, formState: {errors, isSubmitting}} = useForm<NoteInput>({
-        defaultValues:{
+        defaultValues: {
             title: note?.title ?? "",
             content: note?.content ?? "",
-            label: note?.label?.label ?? ""
+            label: note?.label?.label ?? Labels.Home.label
         }
     })
 
-    console.log(`Default ${control._defaultValues.label}`)
     let header = "Create Note"
     if (note) header = "Edit Note"
     const allLabels = labels
@@ -37,7 +35,6 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
             if (note)
                 noteResponse = await updateNote(note._id, input)
             else noteResponse = await createNote(input)
-            console.log(noteResponse)
             onNoteSave(noteResponse)
         } catch (error) {
             console.log(error)
@@ -51,7 +48,16 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
             onClose={onDismiss}
             className={styles.modal}
         >
-            <Box className={styles.modal_content}>
+            <Box
+                className = {styles.modal_content}
+                sx={{
+                    width: {
+                        xs: 0.7,
+                        md: 0.6,
+                        lg: 0.4
+                    },
+                }}
+            >
                 <Stack direction="column" gap={2}>
                     <Typography variant="h4" className={styles.modal_title}>
                         {header}
@@ -95,6 +101,7 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
                                 name="label"
                                 defaultValue={control._defaultValues.label}
                                 control={control}
+                                rules={{required: "Category should be selected"}}
                                 render={({field: {onChange, value}}) =>
                                     <FormControl>
                                         <InputLabel>Category</InputLabel>

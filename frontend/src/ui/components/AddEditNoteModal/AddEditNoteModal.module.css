@@ -5,7 +5,6 @@
 }
 
 .modal_content {
-    width: 40%;
     background: white;
     border: 0;
     border-radius: 8px;
@@ -14,6 +13,7 @@
 
 .modal_title{
     text-align: center;
+    margin-bottom: 32px;
 }
 
 .modal_save-btn{
