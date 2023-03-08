@@ -1,8 +1,8 @@
-import NoteModel from "../models/entities/NoteEntity";
 import NoteRequest from "../models/requests/NoteRequest";
 import mongoose from "mongoose";
 import createHttpError from "http-errors";
-import {fromLabelText, Labels} from "../models/Labels";
+import {fromLabelText} from "../models/Labels";
+import NoteModel from "../models/entities/NoteEntity"
 
 const getNotes = async () => {
     return await NoteModel.find().exec();
@@ -14,7 +14,6 @@ const createNote = async (noteBody: NoteRequest) => {
     return await NoteModel.create({
         title: noteBody.title,
         content: noteBody.content,
-        color: noteBody.color,
         label: noteBody.label
     })
 }
@@ -30,7 +29,6 @@ const updateNote = async (noteId: string, noteBody: NoteRequest) => {
 
     note.title = noteBody.title
     note.content = noteBody.content
-    note.color = noteBody.color
     note.label = label
 
     return await note.save()

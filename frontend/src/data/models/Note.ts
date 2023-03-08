@@ -1,11 +1,20 @@
-import {Labels} from "./Labels";
+import {fromLabelText, Labels} from "./Labels";
+import NoteDTO from "./NoteDTO";
 
-export default interface Note {
+export default class Note {
     _id: string
     title: string
     content: string
-    color: string
     label: Labels
     createdAt: string
-    updatedAt?: string
+    updatedAt: string
+
+    constructor(dto: NoteDTO) {
+        this._id = dto._id
+        this.title = dto.title
+        this.content = dto.content
+        this.label = fromLabelText(dto.label)
+        this.createdAt = dto.createdAt
+        this.updatedAt = dto.updatedAt
+    }
 }

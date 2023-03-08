@@ -1,46 +1,46 @@
 import {apiCall} from "./ApiCall";
-import Note from "../models/Note";
-import {fromLabelText, Labels} from "../models/Labels";
+import NoteDTO from "../models/NoteDTO";
 import NoteRequest from "./requests/NoteRequest";
 import NoteInput from "../../ui/components/AddEditNoteModal/NoteInput";
+import Note from "../models/Note";
+import {toDomainNote} from "../models/NoteMapper";
 
 const notesEndpoint = "/notes/"
 
 export async function getAllNotes(): Promise<Note[]> {
-    return await apiCall(notesEndpoint, {method: 'GET'})
+    const noteDtos = await apiCall(notesEndpoint, {method: 'GET'}) as NoteDTO[]
+    return noteDtos.map(note => new Note(note))
 }
 
 export async function createNote(
     noteInput:NoteInput
 ): Promise<Note> {
-    const label = fromLabelText(noteInput.label)
     const noteReq: NoteRequest = {
         title: noteInput.title,
         content: noteInput.content,
-        color: label.color,
-        label: label.label
+        label: noteInput.label
     }
-    return await apiCall(notesEndpoint, {
+    const response = await apiCall(notesEndpoint, {
         method: 'POST',
         headers: {'Content-Type': "application/json"},
         body: JSON.stringify(noteReq)
-    })
+    }) as NoteDTO
+    return toDomainNote(response)
 }
 
 export async function updateNote(
     noteId:string,
     noteInput:NoteInput
 ): Promise<Note> {
-    const label = fromLabelText(noteInput.label)
     const noteReq: NoteRequest = {
         title: noteInput.title,
         content: noteInput.content,
-        color: label.color,
-        label: label.label
+        label: noteInput.label
     }
-    return await apiCall(`${notesEndpoint}/${noteId}`, {
+    const response = await apiCall(`${notesEndpoint}/${noteId}`, {
         method: 'PUT',
         headers: {'Content-Type': "application/json"},
         body: JSON.stringify(noteReq)
-    })
+    }) as NoteDTO
+    return toDomainNote(response)
 }
