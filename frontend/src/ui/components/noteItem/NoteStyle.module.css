@@ -5,6 +5,7 @@
     aspect-ratio: 1.33;
     position: relative;
     display: flex;
+    cursor: pointer;
 }
 
 .note_card--content{
