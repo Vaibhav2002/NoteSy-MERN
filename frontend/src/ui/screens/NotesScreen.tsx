@@ -36,9 +36,7 @@ const NotesScreen = () => {
                 <Grid key={note._id}>
                     <NoteItem
                         note={note}
-                        onClick={ clickedNote =>
-                            setNoteToEdit(clickedNote)
-                        }
+                        onClick={setNoteToEdit}
                     />
                 </Grid>
             ))}
@@ -76,6 +74,11 @@ const NotesScreen = () => {
                     aria-label="add"
                     color="primary"
                     onClick={() => setModalOpen(true)}
+                    sx = {{
+                        position: "absolute",
+                        bottom: 32,
+                        right: 32,
+                    }}
                 >
                     <Add/>
                 </Fab>

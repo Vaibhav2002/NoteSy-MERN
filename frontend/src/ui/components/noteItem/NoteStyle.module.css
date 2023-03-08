@@ -9,11 +9,21 @@
 
 .note_card--content{
     height: 100%;
+    padding: 16px;
 }
 
 .note-timestamp{
     position: absolute;
     bottom: 0;
     right: 0;
-    padding: 16px;
+}
+
+.note_label--color{
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    aspect-ratio: 1;
+    position: absolute;
+    top: 8px;
+    right: 8px
 }
