@@ -1,0 +1,26 @@
+.width100{
+    width: 100%;
+}
+
+.size100{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+}
+
+.centerContentsHorizontal{
+    display: flex;
+    justify-content: center;
+}
+
+.centerHorizontal{
+    margin: auto auto
+}
+
+.centerContent{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
