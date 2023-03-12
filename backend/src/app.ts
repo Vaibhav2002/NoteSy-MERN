@@ -27,9 +27,9 @@ app.use(session({
     })
 }))
 
-app.use("/auth", authRoutes)
-app.use("/user", authMiddleware, userRoutes)
-app.use("/notes", authMiddleware, noteRoutes)
+app.use("/api/auth", authRoutes)
+app.use("/api/user", authMiddleware, userRoutes)
+app.use("/api/notes", authMiddleware, noteRoutes)
 
 //middlewares
 app.use(notFoundMiddleware)
