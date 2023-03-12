@@ -1,13 +1,12 @@
 import React from 'react';
 import './App.css';
-import NotesScreen from "./ui/screens/NotesScreen";
+import {RouterProvider} from "react-router-dom";
+import router from "./ui/screens/router";
 
 function App() {
-  return (
-      <>
-        <NotesScreen/>
-      </>
-  );
+    return (
+        <RouterProvider router={router}/>
+    );
 }
 
 export default App;
