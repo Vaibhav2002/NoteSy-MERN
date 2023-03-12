@@ -13,18 +13,14 @@ const NotesScreen = () => {
     const [isModalOpen, setModalOpen] = useState(false)
     const [noteToEdit, setNoteToEdit] = useState<Note | undefined>(undefined)
 
-    async function fetchNotes() {
-        try {
-            const notes = await getAllNotes()
-            setNotes(notes)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     useEffect(() => {
         async function loadNotes() {
-            await fetchNotes()
+            try {
+                const notes = await getAllNotes()
+                setNotes(notes)
+            } catch (error) {
+                console.log(error)
+            }
         }
 
         loadNotes()
