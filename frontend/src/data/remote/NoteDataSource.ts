@@ -5,7 +5,7 @@ import NoteInput from "../../ui/components/AddEditNoteModal/NoteInput";
 import Note from "../models/Note";
 import {toDomainNote} from "../models/NoteMapper";
 
-const notesEndpoint = "/notes/"
+const notesEndpoint = "/notes"
 
 export async function getAllNotes(): Promise<Note[]> {
     const noteDtos = await apiCall(notesEndpoint, {method: 'GET'}) as NoteDTO[]
