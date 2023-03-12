@@ -1,10 +1,10 @@
-import {getAllNotes} from "../../data/remote/NoteDataSource";
+import {getAllNotes} from "../../../data/remote/NoteDataSource";
 import React, {useEffect, useState} from "react"
-import Note from "../../data/models/Note";
-import NoteItem from "../components/noteItem/NoteItem";
+import Note from "../../../data/models/Note";
+import NoteItem from "../../components/noteItem/NoteItem";
 import Grid from '@mui/material/Unstable_Grid2';
 import {Box, Fab} from "@mui/material";
-import AddEditNoteModal from "../components/AddEditNoteModal/AddEditNoteModal";
+import AddEditNoteModal from "../../components/AddEditNoteModal/AddEditNoteModal";
 import {Add} from "@mui/icons-material";
 import styles from "./NoteScreen.module.css"
 
