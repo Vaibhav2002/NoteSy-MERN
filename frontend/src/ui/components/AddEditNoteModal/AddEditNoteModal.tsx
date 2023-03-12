@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import {createNote, updateNote} from "../../../data/remote/NoteDataSource";
 import NoteInput from "./NoteInput";
 import Note from "../../../data/models/Note";
+import FormTextField from "../fFormComponents/FormTextFields";
 
 interface AddEditNoteProps {
     note?: Note
@@ -64,38 +65,24 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
                     </Typography>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Stack direction="column" gap={2}>
-                            <Controller
+                            <FormTextField
                                 name="title"
                                 defaultValue={control._defaultValues.title}
                                 rules={{required: "Title is required"}}
                                 control={control}
-                                render={({field: {onChange, value}}) =>
-                                    <TextField
-                                        id="outlined-basic-controlled"
-                                        value={value}
-                                        error={!!errors.title}
-                                        helperText={errors.title?.message}
-                                        onChange={onChange}
-                                        label="Title"/>
-                                }
+                                error={errors.title}
+                                label = "Title"
                             />
-                            <Controller
+                            <FormTextField
                                 name="content"
                                 defaultValue={control._defaultValues.content}
                                 rules={{required: "Content is required"}}
                                 control={control}
-                                render={({field: {onChange, value}}) =>
-                                    <TextField
-                                        id="outlined-multiline-flexble-controlled"
-                                        label="Content"
-                                        multiline
-                                        helperText={errors.content?.message}
-                                        error={!!errors.content}
-                                        value={value}
-                                        onChange={onChange}
-                                        rows={4}
-                                    />
-                                }
+                                errors={!!errors.content}
+                                rows={4}
+                                multiline
+                                id="outlined-multiline-flexble-controlled"
+                                label="Content"
                             />
                             <Controller
                                 name="label"
