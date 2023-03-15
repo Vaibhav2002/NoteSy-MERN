@@ -61,7 +61,10 @@ const deleteNote: RequestHandler<NoteIdParam, unknown, unknown, unknown> = async
         assertIsDefined(userId)
 
         await dataSource.deleteNote(userId, noteId)
-        res.sendStatus(200)
+        res.status(200).json({
+            statusCode: 200,
+            message: "Note deleted successfully"
+        })
     } catch (error) {
         next(error)
     }
