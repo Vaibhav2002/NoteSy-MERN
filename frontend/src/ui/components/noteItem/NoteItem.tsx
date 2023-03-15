@@ -10,15 +10,23 @@ import Note from "../../../data/models/Note";
 interface NoteItemProps {
     note: Note
     onClick: (note: Note) => void
+
+    onDragStart:(e:React.DragEvent, note:Note) => void
+
+    onDragEnd:()=>void
 }
 
-const NoteItem = ({note, onClick}: NoteItemProps) => {
+const NoteItem = ({note, onClick, onDragStart, onDragEnd}: NoteItemProps) => {
     let time = `Created: ${formatDate(note.createdAt)}`
     if (note.updatedAt > note.createdAt)
         time = `Updated: ${formatDate(note.updatedAt)}`
-    console.log(note.label)
     return (
-        <Card className={styles.note_card} onClick={() => onClick(note)}>
+        <Card
+            draggable
+            onDragStart={(e)=> onDragStart(e, note) }
+            onDragEnd={onDragEnd}
+            className={styles.note_card}
+            onClick={() => onClick(note)}>
             <CardContent className={styles.note_cardContent}>
                 <Typography variant="h6" mr={3}>{note.title}</Typography>
                 <Typography
