@@ -13,7 +13,7 @@ export async function getAllNotes(): Promise<Note[]> {
 }
 
 export async function createNote(
-    noteInput:NoteInput
+    noteInput: NoteInput
 ): Promise<Note> {
     const noteReq: NoteRequest = {
         title: noteInput.title,
@@ -29,8 +29,8 @@ export async function createNote(
 }
 
 export async function updateNote(
-    noteId:string,
-    noteInput:NoteInput
+    noteId: string,
+    noteInput: NoteInput
 ): Promise<Note> {
     const noteReq: NoteRequest = {
         title: noteInput.title,
@@ -43,4 +43,10 @@ export async function updateNote(
         body: JSON.stringify(noteReq)
     }) as NoteDTO
     return toDomainNote(response)
+}
+
+export async function deleteNote(
+    noteId: string
+) {
+    await apiCall(`${notesEndpoint}/${noteId}`, {method: 'DELETE'})
 }
