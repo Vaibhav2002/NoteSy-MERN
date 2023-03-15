@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import {createNote, updateNote} from "../../../data/remote/NoteDataSource";
 import NoteInput from "./NoteInput";
 import Note from "../../../data/models/Note";
-import FormTextField from "../fFormComponents/FormTextFields";
+import FormTextField from "../formComponents/FormTextFields";
 
 interface AddEditNoteProps {
     note?: Note

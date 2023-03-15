@@ -1,7 +1,7 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
 import {Button, Link, Stack} from "@mui/material";
-import FormTextField from "../../components/fFormComponents/FormTextFields";
+import FormTextField from "../../components/formComponents/FormTextFields";
 import utilStyle from "../../styles/util.css"
 import * as AuthApi from "../../../data/remote/AuthDataSource"
 import LoginCredentials from "../../../data/remote/requests/LoginCredentials";
