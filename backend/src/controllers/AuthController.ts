@@ -40,3 +40,13 @@ export const register: RequestHandler<unknown, unknown, RegisterRequest, unknown
         next(error)
     }
 }
+
+export const logout:RequestHandler = (req, res, next) =>{
+    req.session.destroy(error =>{
+        if(error) next(error)
+        else res.status(200).json({
+            statusCode:200,
+            message: "User successfully logged out"
+        })
+    })
+}
