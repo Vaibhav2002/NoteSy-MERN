@@ -9,7 +9,7 @@ import User from "../../../data/models/User";
 
 const AuthScreen = () => {
 
-    const [isRegister, setRegister] = useState(true)
+    const [isRegister, setRegister] = useState(false)
 
     const toRegister = () => setRegister(true)
     const toLogin = () => setRegister(false)
