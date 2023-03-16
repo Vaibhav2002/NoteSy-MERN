@@ -7,6 +7,9 @@ import {Box, Fab} from "@mui/material";
 import AddEditNoteModal from "../../components/AddEditNoteModal/AddEditNoteModal";
 import {Add, DeleteOutlineRounded} from "@mui/icons-material";
 import styles from "./NoteScreen.module.css"
+import NotesToolbar from "../../components/NoteScreenToolbar";
+import {logoutUser} from "../../../data/remote/AuthDataSource";
+import {useNavigate} from "react-router-dom";
 
 const NotesScreen = () => {
     const [notes, setNotes] = useState<Note[]>([])
@@ -14,6 +17,8 @@ const NotesScreen = () => {
     const [noteToEdit, setNoteToEdit] = useState<Note | undefined>(undefined)
     const [canDelete, setCanDelete] = useState(false)
     const [isHoveringOnDelete, setIsHoveringOnDelete] = useState(false)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function loadNotes() {
@@ -38,6 +43,15 @@ const NotesScreen = () => {
         }
     }
 
+    async function logout() {
+        try {
+            await logoutUser()
+            navigate("/auth")
+        } catch (error) {
+            alert(error)
+            console.log(error)
+        }
+    }
 
     function onDragStart(e: React.DragEvent, noteId: string) {
         e.dataTransfer?.setData("noteId", noteId)
@@ -82,6 +96,7 @@ const NotesScreen = () => {
 
     return (
         <>
+            <NotesToolbar onLogoutPressed={logout}/>
             <Box className={styles.noteScreen}>
                 <Box p={2}>{notesGrid}</Box>
                 {isModalOpen && <AddEditNoteModal
@@ -104,7 +119,6 @@ const NotesScreen = () => {
                 />
                 }
                 <Fab
-                    className={styles.addNoteFab}
                     aria-label="add"
                     color="primary"
                     onClick={() => setModalOpen(true)}

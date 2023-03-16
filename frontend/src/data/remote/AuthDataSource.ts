@@ -21,4 +21,10 @@ const registerUser = async (credentials: RegisterCredentials) => {
     return user as User
 }
 
-export {loginUser, registerUser}
+const logoutUser = async () => {
+    await apiCall("/auth/logout", {method: "POST"})
+}
+
+export {loginUser, registerUser, logoutUser}
+
+
