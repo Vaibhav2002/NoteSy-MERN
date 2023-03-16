@@ -1,5 +1,7 @@
+
+const baseUrl = process.env["BACKEND_URL"]
 export const apiCall = async (input:RequestInfo, init?:RequestInit) => {
-    const response = await fetch(`/api${input}`, init)
+    const response = await fetch(`${baseUrl}${input}`, init)
     if(!response.ok) {
         const error = await response.json()
         throw Error(error.error)
