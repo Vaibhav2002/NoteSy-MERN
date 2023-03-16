@@ -28,18 +28,18 @@ const NotesScreen = () => {
         loadNotes()
     }, []);
 
-    async function deleteNote(noteId:string){
-        try{
+    async function deleteNote(noteId: string) {
+        try {
             await NotesApi.deleteNote(noteId)
             setNotes(notes.filter(note => note._id !== noteId))
-        } catch(error){
+        } catch (error) {
             alert(error)
             console.log(error)
         }
     }
 
 
-    function onDrag(e: React.DragEvent, noteId: string) {
+    function onDragStart(e: React.DragEvent, noteId: string) {
         e.dataTransfer?.setData("noteId", noteId)
         setCanDelete(true)
     }
@@ -50,7 +50,7 @@ const NotesScreen = () => {
         deleteNote(noteId)
     }
 
-    const onDragOverDelete = (e:React.DragEvent) => {
+    const onDragOverDelete = (e: React.DragEvent) => {
         e.preventDefault()
         setIsHoveringOnDelete(true)
     }
@@ -59,17 +59,22 @@ const NotesScreen = () => {
 
     const onDragEnd = () => setCanDelete(false)
 
-
-
     const notesGrid =
-        <Grid container spacing={{xs: 3, md: 2}} columns={{xs: 2, sm: 4, md: 8}}>
+        <Grid
+            container
+            alignItems="flex-start"
+            justifyContent="space-evenly"
+            rowSpacing={2}
+            columnSpacing={1}
+            columns={{xs: 2, sm: 3, md: 4}}
+        >
             {notes.map(note => (
                 <Grid key={note._id}>
                     <NoteItem
                         note={note}
                         onClick={setNoteToEdit}
-                        onDragStart={(e, note) => onDrag(e, note._id)}
-                        onDragEnd = {onDragEnd}
+                        onDragStart={(e, note) => onDragStart(e, note._id)}
+                        onDragEnd={onDragEnd}
                     />
                 </Grid>
             ))}
@@ -85,9 +90,7 @@ const NotesScreen = () => {
                         setNotes([...notes, note]);
                     }
                     }
-                    onDismiss={() => {
-                        setModalOpen(false)
-                    }}
+                    onDismiss={() => setModalOpen(false)}
                 />
                 }
                 {noteToEdit && <AddEditNoteModal
@@ -97,9 +100,7 @@ const NotesScreen = () => {
                         setNoteToEdit(undefined)
                     }
                     }
-                    onDismiss={() => {
-                        setNoteToEdit(undefined)
-                    }}
+                    onDismiss={() => setNoteToEdit(undefined)}
                 />
                 }
                 <Fab
@@ -108,7 +109,7 @@ const NotesScreen = () => {
                     color="primary"
                     onClick={() => setModalOpen(true)}
                     sx={{
-                        position: "absolute",
+                        position: "fixed",
                         bottom: 32,
                         right: 32,
                     }}
@@ -125,9 +126,9 @@ const NotesScreen = () => {
                     size={
                         isHoveringOnDelete ? "large" : "medium"
                     }
-                    sx = {{
+                    sx={{
                         zIndex: 5,
-                        position: "absolute",
+                        position: "fixed",
                         bottom: 32,
                         left: "50%",
                         right: "50%"
