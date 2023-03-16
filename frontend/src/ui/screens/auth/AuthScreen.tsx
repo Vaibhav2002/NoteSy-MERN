@@ -4,7 +4,6 @@ import Card from "@mui/material/Card";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
 import {useNavigate} from "react-router-dom";
-import {getAuthenticatedUser} from "../../../data/remote/UserDataSource";
 import User from "../../../data/models/User";
 
 const AuthScreen = () => {
@@ -20,20 +19,6 @@ const AuthScreen = () => {
         "/notes",
         {state: user}
     )
-
-    useEffect(() => {
-        async function getUser() {
-            try {
-                const user = await getAuthenticatedUser()
-                toNotes(user)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-
-        getUser()
-    }, []);
-
 
     return (
         <Box
