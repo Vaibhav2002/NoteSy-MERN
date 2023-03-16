@@ -5,9 +5,9 @@
   "scripts": {
     "tsc": "tsc",
     "start": "tsc && nodemon build/server.js",
-    "build": "rimraf build && tsc",
+    "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add build"
+    "add-build": "git add dist"
   },
   "pre-commit": [
     "ts.check",
