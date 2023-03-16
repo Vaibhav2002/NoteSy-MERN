@@ -8,11 +8,13 @@ import validateEnv from "./util/validateEnv";
 import MongoStore from "connect-mongo";
 import authMiddleware from "./middleware/AuthMiddleware";
 import userRoutes from "./routes/UserRoutes";
+import cors from 'cors'
 
 const app = express()
 
 app.use(express.json())
 app.use(logger("dev"))
+app.use(cors())
 
 app.use(session({
     secret: validateEnv.SESSION_SECRET,
