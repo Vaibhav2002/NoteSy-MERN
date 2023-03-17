@@ -53,7 +53,7 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
                 className = {styles.modal_content}
                 sx={{
                     width: {
-                        xs: 0.7,
+                        xs: 0.8,
                         md: 0.6,
                         lg: 0.4
                     },
