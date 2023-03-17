@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
-import {Button, Container, Stack} from "@mui/material";
+import React from 'react';
+import {Box, Button, Stack, useTheme} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {Link, useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import {getAuthenticatedUser} from "../../../data/remote/UserDataSource";
 
 const HomeScreen = () => {
@@ -18,37 +18,71 @@ const HomeScreen = () => {
 
     const navigate = useNavigate()
 
-    async function onButtonPress(){
-        if(await isLoggedIn())
+    async function onButtonPress() {
+        if (await isLoggedIn())
             navigate("/notes")
         else navigate("/auth")
     }
 
+    const theme = useTheme()
+    const colors = theme.palette
     return (
-        <Container sx={{
-            height:"100vh",
-            display:"flex",
-            justifyContent:"center",
-            alignItems:"center"
-        }}>
-            <Stack direction="column">
-                <Typography variant="h3" textAlign="center">
-                    Welcome to NotesApp
-                </Typography>
-                <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={onButtonPress}
-                    sx={{
-                        marginTop: 2,
-                        padding: 2
-                    }}
-                >
-                    Get Started
-                </Button>
-            </Stack>
+        <Box
+            height="100vh"
+            display="flex"
+            flexDirection="row"
+        >
+            <Box flex="1" display="flex" alignItems="center" justifyContent="center">
+                <Stack direction="column" gap={2}>
+                    <Typography
+                        sx={{
+                            typography: {
+                                xs: "h4",
+                                sm: "h2",
+                                xl: "h1"
+                            }
+                        }}
+                        fontWeight="800"
+                    >
+                        All your notes. <br/>
+                        Oragnized. <br/>
+                        Effortless.
+                    </Typography>
 
-        </Container>
+                    <Typography variant="body1" color={colors.text.secondary}>
+                        Inspiration strikes everywhere. Notesy lets you<br/>
+                        capture your ideas across any device.
+                    </Typography>
+
+                    <Button
+                        variant="contained"
+                        onClick={onButtonPress}
+                        sx={{
+                            borderRadius: 3,
+                            width: "200px",
+                            marginTop: 3,
+                            padding: 2
+                        }}
+                    >
+                        Get Started
+                    </Button>
+                </Stack>
+            </Box>
+
+
+            <Box
+                component="img"
+                flex="1"
+                sx={{
+                    display: {
+                        xs: "none",
+                        sm: "block",
+                    }
+                }}
+                src="/home_bg.png"
+            />
+
+        </Box>
     );
 };
 
