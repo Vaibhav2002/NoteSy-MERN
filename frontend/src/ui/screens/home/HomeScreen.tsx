@@ -79,7 +79,7 @@ const HomeScreen = () => {
                         sm: "block",
                     }
                 }}
-                src="/home_bg.png"
+                src="/images/home_bg.png"
             />
 
         </Box>
