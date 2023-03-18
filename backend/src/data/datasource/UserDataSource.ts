@@ -22,10 +22,10 @@ export const createUser = async (username:string, email:string, password:string)
 export const getUser = async(email:string, password:string) => {
 
     const user = await getUserByEmail(email, "+email +password")
-    if(!user) throw createHttpError("User with this email does not exist")
+    if(!user) throw createHttpError(400, "User with this email does not exist")
 
     const arePasswordsSame = await comparePasswords(password, user.password!)
-    if(!arePasswordsSame) throw createHttpError("Passwords do not match")
+    if(!arePasswordsSame) throw createHttpError(400, "Passwords do not match")
 
     return user
 }
