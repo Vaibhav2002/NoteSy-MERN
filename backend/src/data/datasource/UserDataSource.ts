@@ -2,6 +2,7 @@ import UserModel from "../models/entities/UserEntity"
 import createHttpError from "http-errors";
 import {comparePasswords, hashPassword} from "../../util/PasswordHasher";
 import mongoose from "mongoose";
+import {assertIsDefined} from "../../util/assertIsDefined";
 
 export const createUser = async (username:string, email:string, password:string) => {
 
@@ -10,21 +11,29 @@ export const createUser = async (username:string, email:string, password:string)
 
     const hashedPwd = await hashPassword(password)
 
+    /**
+     * As this user object contains password field, we cannot return it
+     */
     const user = await UserModel.create({
         username: username,
         email:email,
         password: hashedPwd
     })
 
-    return user
+    const userWithEmail = await getUserById(user._id)
+    assertIsDefined(userWithEmail)
+    return userWithEmail
 }
 
 export const getUser = async(email:string, password:string) => {
 
-    const user = await getUserByEmail(email, "+email +password")
+    const user = await getUserByEmail(email, "+email")
     if(!user) throw createHttpError(400, "User with this email does not exist")
 
-    const arePasswordsSame = await comparePasswords(password, user.password!)
+    const userWithPwd = await getUserByEmail(email, "+password")
+    assertIsDefined(userWithPwd)
+
+    const arePasswordsSame = await comparePasswords(password, userWithPwd.password!)
     if(!arePasswordsSame) throw createHttpError(400, "Passwords do not match")
 
     return user
