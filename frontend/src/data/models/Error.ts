@@ -6,4 +6,12 @@ class HttpError extends Error{
     }
 }
 
+/**
+ * 401 User Not Authenticated Error
+ */
 export class NotAuthenticatedError extends HttpError{}
+
+/**
+ * 400 Bad Request Error
+ */
+export class BadRequestError extends HttpError {}
