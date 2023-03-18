@@ -111,6 +111,7 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
                             <Button
                                 variant="contained"
                                 type="submit"
+                                sx={{padding: 2}}
                                 disabled={isSubmitting}
                                 className={styles.modal_saveBtn}
                             >
