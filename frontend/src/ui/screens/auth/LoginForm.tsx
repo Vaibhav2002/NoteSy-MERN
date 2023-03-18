@@ -1,28 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
-import {Button, Link, Stack} from "@mui/material";
+import {Alert, Button, Collapse, Link, Stack} from "@mui/material";
 import FormTextField from "../../components/formComponents/FormTextFields";
 import utilStyle from "../../styles/util.css"
 import * as AuthApi from "../../../data/remote/AuthDataSource"
 import LoginCredentials from "../../../data/remote/requests/LoginCredentials";
 import User from "../../../data/models/User"
 import Typography from "@mui/material/Typography";
+import {BadRequestError} from "../../../data/models/Error";
 
 interface LoginProps {
     onLoginSuccess: (user: User) => void
-    onMoveToRegister:()=>void
+    onMoveToRegister: () => void
 }
 
 const LoginForm = ({onLoginSuccess, onMoveToRegister}: LoginProps) => {
     const {control, handleSubmit, formState: {errors}} = useForm<LoginCredentials>()
+    const [errorMessage, setErrorMessage] = useState<string|null>(null)
 
     const onSubmit = async (credentials: LoginCredentials) => {
         try {
             const user = await AuthApi.loginUser(credentials)
             onLoginSuccess(user)
         } catch (error) {
-            alert(error)
-            console.log(error)
+            console.log("Error" + error)
+            if (error instanceof BadRequestError) {
+                setErrorMessage(error.message)
+            } else alert(error)
         }
     }
 
@@ -33,12 +37,16 @@ const LoginForm = ({onLoginSuccess, onMoveToRegister}: LoginProps) => {
                     Log In
                 </Typography>
 
+                <Collapse in={errorMessage !== null}>
+                    <Alert onClose={() => setErrorMessage(null)} severity="error">{errorMessage}</Alert>
+                </Collapse>
+
                 <FormTextField
                     control={control}
                     name="email"
                     label="Email"
                     error={errors.email}
-                    rules={{required: true}}
+                    rules={{required: "Email is required" }}
                     type="email"/>
 
                 <FormTextField
@@ -46,7 +54,7 @@ const LoginForm = ({onLoginSuccess, onMoveToRegister}: LoginProps) => {
                     name="password"
                     label="Password"
                     error={errors.password}
-                    rules={{required: true}}
+                    rules={{required: "Password is required" }}
                     type="password"/>
 
                 <Button
@@ -60,7 +68,8 @@ const LoginForm = ({onLoginSuccess, onMoveToRegister}: LoginProps) => {
                 </Button>
 
                 <Typography mt={2} variant="body2" textAlign="center">
-                    Don't have an account yet? <Link onClick={onMoveToRegister} sx={{cursor:"pointer"}} color="primary">Register</Link>
+                    Don't have an account yet? <Link onClick={onMoveToRegister} sx={{cursor: "pointer"}}
+                                                     color="primary">Register</Link>
                 </Typography>
             </Stack>
         </form>
