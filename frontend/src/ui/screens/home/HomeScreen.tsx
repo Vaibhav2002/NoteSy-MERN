@@ -3,6 +3,7 @@ import {Box, Button, Stack, useTheme} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useNavigate} from "react-router-dom"
 import {getAuthenticatedUser} from "../../../data/remote/UserDataSource";
+import {APP_NAME} from "../../../util/Constants";
 
 const HomeScreen = () => {
 
@@ -50,7 +51,7 @@ const HomeScreen = () => {
                     </Typography>
 
                     <Typography variant="body1" color={colors.text.secondary}>
-                        Inspiration strikes everywhere. Notesy lets you<br/>
+                        Inspiration strikes everywhere. {APP_NAME} lets you<br/>
                         capture your ideas across any device.
                     </Typography>
 
