@@ -8,8 +8,8 @@ export const login: RequestHandler<unknown, unknown, LoginRequest, unknown> = as
     try {
         const {email, password} = req.body
 
-        if(!email) throw createHttpError("Login Request must have an email")
-        if(!password) throw createHttpError("Login Request must have a password")
+        if(!email) throw createHttpError(400, "Login Request must have an email")
+        if(!password) throw createHttpError(400, "Login Request must have a password")
 
         const user = await getUser(email, password)
 
@@ -26,9 +26,9 @@ export const register: RequestHandler<unknown, unknown, RegisterRequest, unknown
     try {
         const {username, email, password} = req.body
 
-        if(!username) throw createHttpError("Register Request must have a username")
-        if(!email) throw createHttpError("Register Request must have an email")
-        if(!password) throw createHttpError("Register Request must have a password")
+        if(!username) throw createHttpError(400, "Register Request must have a username")
+        if(!email) throw createHttpError(400, "Register Request must have an email")
+        if(!password) throw createHttpError(400, "Register Request must have a password")
 
         const user = await createUser(username, email, password)
 
