@@ -3,13 +3,14 @@ import React, {useEffect, useState} from "react"
 import Note from "../../../data/models/Note";
 import NoteItem from "../../components/noteItem/NoteItem";
 import Grid from '@mui/material/Unstable_Grid2';
-import {Box, Fab} from "@mui/material";
+import {Box, Fab, Stack} from "@mui/material";
 import AddEditNoteModal from "../../components/AddEditNoteModal/AddEditNoteModal";
 import {Add, DeleteOutlineRounded} from "@mui/icons-material";
 import styles from "./NoteScreen.module.css"
 import NotesToolbar from "../../components/NoteScreenToolbar";
 import {logoutUser} from "../../../data/remote/AuthDataSource";
 import {useNavigate} from "react-router-dom";
+import Typography from "@mui/material/Typography";
 
 const NotesScreen = () => {
     const [notes, setNotes] = useState<Note[]>([])
@@ -46,7 +47,7 @@ const NotesScreen = () => {
     async function logout() {
         try {
             await logoutUser()
-            navigate("/auth", { replace: true })
+            navigate("/auth", {replace: true})
         } catch (error) {
             alert(error)
             console.log(error)
@@ -73,6 +74,8 @@ const NotesScreen = () => {
 
     const onDragEnd = () => setCanDelete(false)
 
+    const areThereNotes = notes.length !== 0
+
     const notesGrid =
         <Grid
             container
@@ -94,11 +97,17 @@ const NotesScreen = () => {
             ))}
         </Grid>
 
+    const noNotesText = <Typography variant = "h5" className={styles.noNotesText}>
+        You don't have any notes.<br/> Add a new note by clicking the + button below.
+    </Typography>
+
     return (
-        <>
+        <Box className={styles.noteScreen}>
             <NotesToolbar onLogoutPressed={logout}/>
-            <Box className={styles.noteScreen}>
-                <Box p={2}>{notesGrid}</Box>
+            <Box>
+
+                {areThereNotes ? <Box p={2}>{notesGrid}</Box> : noNotesText}
+
                 {isModalOpen && <AddEditNoteModal
                     onNoteSave={note => {
                         setModalOpen(false)
@@ -108,6 +117,7 @@ const NotesScreen = () => {
                     onDismiss={() => setModalOpen(false)}
                 />
                 }
+
                 {noteToEdit && <AddEditNoteModal
                     note={noteToEdit}
                     onNoteSave={newNote => {
@@ -118,6 +128,7 @@ const NotesScreen = () => {
                     onDismiss={() => setNoteToEdit(undefined)}
                 />
                 }
+
                 <Fab
                     aria-label="add"
                     color="primary"
@@ -153,7 +164,7 @@ const NotesScreen = () => {
                 }
 
             </Box>
-        </>
+        </Box>
     );
 };
 
