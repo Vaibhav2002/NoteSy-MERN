@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box} from '@mui/material';
+import {Box, Button, Stack} from '@mui/material';
 import Card from "@mui/material/Card";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
@@ -21,35 +21,49 @@ const AuthScreen = () => {
     )
 
     return (
+
         <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
             height="100vh"
+            display="flex"
+            flexDirection="row"
         >
-            <Card sx={{
-                width: {
-                    xs: 0.8,
-                    sm: 0.6,
-                    md: 0.4
-                },
-                padding: 3,
-                borderRadius: 2
-            }}>
-                {
-                    isRegister
-                        ? <RegisterForm
-                            onRegisterSuccess={toNotes}
-                            onMoveToLogin={toLogin}
-                        />
-                        : <LoginForm
-                            onLoginSuccess={toNotes}
-                            onMoveToRegister={toRegister}
-                        />
+            <Box flex="1" display="flex" alignItems="center" justifyContent="center">
+                <Card sx={{
+                    width: {
+                        xs: 0.8,
+                        sm: 0.6,
+                    },
+                    padding: 3,
+                    borderRadius: 2
+                }}>
+                    {
+                        isRegister
+                            ? <RegisterForm
+                                onRegisterSuccess={toNotes}
+                                onMoveToLogin={toLogin}
+                            />
+                            : <LoginForm
+                                onLoginSuccess={toNotes}
+                                onMoveToRegister={toRegister}
+                            />
 
-                }
+                    }
+                </Card>
+            </Box>
 
-            </Card>
+
+            <Box
+                component="img"
+                flex="1"
+                sx={{
+                    display: {
+                        xs: "none",
+                        sm: "block",
+                    }
+                }}
+                src="/images/auth_bg.png"
+            />
+
         </Box>
     )
 };
