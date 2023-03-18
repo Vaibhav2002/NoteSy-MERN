@@ -11,9 +11,9 @@ interface NoteItemProps {
     note: Note
     onClick: (note: Note) => void
 
-    onDragStart:(e:React.DragEvent, note:Note) => void
+    onDragStart: (e: React.DragEvent, note: Note) => void
 
-    onDragEnd:()=>void
+    onDragEnd: () => void
 }
 
 const NoteItem = ({note, onClick, onDragStart, onDragEnd}: NoteItemProps) => {
@@ -23,7 +23,7 @@ const NoteItem = ({note, onClick, onDragStart, onDragEnd}: NoteItemProps) => {
     return (
         <Card
             draggable
-            onDragStart={(e)=> onDragStart(e, note) }
+            onDragStart={(e) => onDragStart(e, note)}
             onDragEnd={onDragEnd}
             className={styles.note_card}
             onClick={() => onClick(note)}>

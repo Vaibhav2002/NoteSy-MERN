@@ -16,7 +16,7 @@ interface LoginProps {
 
 const LoginForm = ({onLoginSuccess, onMoveToRegister}: LoginProps) => {
     const {control, handleSubmit, formState: {errors}} = useForm<LoginCredentials>()
-    const [errorMessage, setErrorMessage] = useState<string|null>(null)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const onSubmit = async (credentials: LoginCredentials) => {
         try {
@@ -46,7 +46,7 @@ const LoginForm = ({onLoginSuccess, onMoveToRegister}: LoginProps) => {
                     name="email"
                     label="Email"
                     error={errors.email}
-                    rules={{required: "Email is required" }}
+                    rules={{required: "Email is required"}}
                     type="email"/>
 
                 <FormTextField
@@ -54,7 +54,7 @@ const LoginForm = ({onLoginSuccess, onMoveToRegister}: LoginProps) => {
                     name="password"
                     label="Password"
                     error={errors.password}
-                    rules={{required: "Password is required" }}
+                    rules={{required: "Password is required"}}
                     type="password"/>
 
                 <Button

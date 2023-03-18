@@ -1,15 +1,15 @@
-.noteScreen{
+.noteScreen {
     position: relative;
     height: 100vh;
 }
 
-.addNoteFab{
+.addNoteFab {
     position: fixed;
     bottom: 32px;
     right: 32px;
 }
 
-.noNotesText{
+.noNotesText {
     position: absolute;
     text-align: center;
     left: 50%;

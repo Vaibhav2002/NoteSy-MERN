@@ -1,22 +1,22 @@
-import {Control, Controller, FieldError, FieldErrors, RegisterOptions, useFormContext} from "react-hook-form";
+import {Control, Controller, FieldError, RegisterOptions} from "react-hook-form";
 import {TextField} from "@mui/material";
 
-interface TextFieldProps{
-    control:Control<any>
-    name:string
-    label:string
+interface TextFieldProps {
+    control: Control<any>
+    name: string
+    label: string
 
-    defaultValue?:string
-    rules?:RegisterOptions<any>
+    defaultValue?: string
+    rules?: RegisterOptions<any>
 
-    error?:FieldError
+    error?: FieldError
 
-    id?:string
+    id?: string
 
-    [x:string]:any
+    [x: string]: any
 }
 
-const FormTextField = ({control, name, label, defaultValue, rules, error, id, ...props}:TextFieldProps) => {
+const FormTextField = ({control, name, label, defaultValue, rules, error, id, ...props}: TextFieldProps) => {
     return (
         <Controller
             name={name}
@@ -25,7 +25,7 @@ const FormTextField = ({control, name, label, defaultValue, rules, error, id, ..
             rules={rules}
             render={({field: {onChange, value}}) =>
                 <TextField
-                    id= { id ? id : "outlined-basic-controlled"}
+                    id={id ? id : "outlined-basic-controlled"}
                     {...props}
                     value={value}
                     error={!!error}

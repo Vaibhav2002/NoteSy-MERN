@@ -1,4 +1,4 @@
-class HttpError extends Error{
+class HttpError extends Error {
 
     constructor(message: string) {
         super(message);
@@ -9,9 +9,11 @@ class HttpError extends Error{
 /**
  * 401 User Not Authenticated Error
  */
-export class NotAuthenticatedError extends HttpError{}
+export class NotAuthenticatedError extends HttpError {
+}
 
 /**
  * 400 Bad Request Error
  */
-export class BadRequestError extends HttpError {}
+export class BadRequestError extends HttpError {
+}

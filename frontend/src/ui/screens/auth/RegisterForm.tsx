@@ -12,12 +12,12 @@ import {BadRequestError} from "../../../data/models/Error";
 interface RegisterProps {
     onRegisterSuccess: (user: User) => void
 
-    onMoveToLogin:() => void
+    onMoveToLogin: () => void
 }
 
 const RegisterForm = ({onRegisterSuccess, onMoveToLogin}: RegisterProps) => {
     const {control, handleSubmit, formState: {isSubmitting, errors}} = useForm<RegisterCredentials>()
-    const [errorMessage, setErrorMessage] = useState<string|null>(null)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const onSubmit = async (credentials: RegisterCredentials) => {
         try {
@@ -78,7 +78,8 @@ const RegisterForm = ({onRegisterSuccess, onMoveToLogin}: RegisterProps) => {
                 </Button>
 
                 <Typography mt={2} variant="body2" textAlign="center">
-                    Already have an account? <Link onClick={onMoveToLogin} sx={{cursor:"pointer"}} color="primary">Login</Link>
+                    Already have an account? <Link onClick={onMoveToLogin} sx={{cursor: "pointer"}}
+                                                   color="primary">Login</Link>
                 </Typography>
             </Stack>
         </form>

@@ -6,7 +6,7 @@ export enum Labels {
 
 }
 
-export function fromLabelText(label:string):Labels|undefined{
+export function fromLabelText(label: string): Labels | undefined {
     switch (label) {
         case Labels.Home.toString():
             return Labels.Home

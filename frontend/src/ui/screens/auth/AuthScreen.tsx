@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Box, Button, Stack} from '@mui/material';
+import React, {useState} from 'react';
+import {Box} from '@mui/material';
 import Card from "@mui/material/Card";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
@@ -17,7 +17,7 @@ const AuthScreen = () => {
 
     const toNotes = (user: User) => navigate(
         "/notes",
-        {replace:true}
+        {replace: true}
     )
 
     return (

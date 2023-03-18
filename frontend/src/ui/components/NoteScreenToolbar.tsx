@@ -3,11 +3,11 @@ import {AppBar, Button, Toolbar} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {APP_NAME} from "../../util/Constants";
 
-interface NotesToolbarProps{
-    onLogoutPressed:() => void
+interface NotesToolbarProps {
+    onLogoutPressed: () => void
 }
 
-const NotesToolbar = ({onLogoutPressed}:NotesToolbarProps) => {
+const NotesToolbar = ({onLogoutPressed}: NotesToolbarProps) => {
     return (
         <AppBar position="sticky">
             <Toolbar>

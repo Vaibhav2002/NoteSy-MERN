@@ -1,4 +1,4 @@
-.note_card{
+.note_card {
     height: 200px;
     width: auto;
     min-width: 70px;
@@ -8,18 +8,18 @@
     cursor: pointer;
 }
 
-.note_card--content{
+.note_card--content {
     height: 100%;
     padding: 16px;
 }
 
-.note-timestamp{
+.note-timestamp {
     position: absolute;
     bottom: 0;
     right: 0;
 }
 
-.note_label--color{
+.note_label--color {
     width: 24px;
     height: 24px;
     border-radius: 12px;

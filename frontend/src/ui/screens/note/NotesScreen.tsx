@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react"
 import Note from "../../../data/models/Note";
 import NoteItem from "../../components/noteItem/NoteItem";
 import Grid from '@mui/material/Unstable_Grid2';
-import {Box, Fab, Stack} from "@mui/material";
+import {Box, Fab} from "@mui/material";
 import AddEditNoteModal from "../../components/AddEditNoteModal/AddEditNoteModal";
 import {Add, DeleteOutlineRounded} from "@mui/icons-material";
 import styles from "./NoteScreen.module.css"
@@ -97,7 +97,7 @@ const NotesScreen = () => {
             ))}
         </Grid>
 
-    const noNotesText = <Typography variant = "h5" className={styles.noNotesText}>
+    const noNotesText = <Typography variant="h5" className={styles.noNotesText}>
         You don't have any notes.<br/> Add a new note by clicking the + button below.
     </Typography>
 

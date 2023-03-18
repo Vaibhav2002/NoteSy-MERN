@@ -10,6 +10,7 @@ import authMiddleware from "./middleware/AuthMiddleware";
 import userRoutes from "./routes/UserRoutes";
 import cors from 'cors'
 import path from "path"
+
 const app = express()
 
 app.use(express.json())
@@ -33,10 +34,10 @@ app.use("/api/auth", authRoutes)
 app.use("/api/user", authMiddleware, userRoutes)
 app.use("/api/notes", authMiddleware, noteRoutes)
 
-app.use(express.static(path.join(__dirname,"../../frontend/build")));
+app.use(express.static(path.join(__dirname, "../../frontend/build")));
 console.log(__dirname)
-app.get("*",(req,res) => {
-    res.sendFile(path.resolve(__dirname,"../../frontend","build","index.html"))
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../../frontend", "build", "index.html"))
 })
 
 //middlewares

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Labels, labels} from "../../../data/models/Labels";
 import {Controller, useForm} from "react-hook-form"
-import {Box, Button, FormControl, InputLabel, MenuItem, Modal, Select, Stack, TextField} from "@mui/material";
+import {Box, Button, FormControl, InputLabel, MenuItem, Modal, Select, Stack} from "@mui/material";
 import styles from './AddEditNoteModal.module.css'
 import Typography from "@mui/material/Typography";
 import {createNote, updateNote} from "../../../data/remote/NoteDataSource";
@@ -50,7 +50,7 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
             className={styles.modal}
         >
             <Box
-                className = {styles.modal_content}
+                className={styles.modal_content}
                 sx={{
                     width: {
                         xs: 0.8,
@@ -71,7 +71,7 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
                                 rules={{required: "Title is required"}}
                                 control={control}
                                 error={errors.title}
-                                label = "Title"
+                                label="Title"
                             />
                             <FormTextField
                                 name="content"

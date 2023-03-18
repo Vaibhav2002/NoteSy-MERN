@@ -1,12 +1,13 @@
 export class Labels {
     static readonly Home = new Labels("Home", "#26547c")
-    static readonly  Entertainment = new Labels("Entertainment", "#ef476f")
+    static readonly Entertainment = new Labels("Entertainment", "#ef476f")
 
-    static readonly Work = new Labels("Work","#ffd166")
+    static readonly Work = new Labels("Work", "#ffd166")
 
     static readonly School = new Labels("School", "#06d6a0")
 
-    private constructor(readonly label:string, readonly color:string){}
+    private constructor(readonly label: string, readonly color: string) {
+    }
 }
 
 export const labels = [
@@ -16,7 +17,7 @@ export const labels = [
     Labels.School
 ]
 
-export function fromLabelText(label:string):Labels{
+export function fromLabelText(label: string): Labels {
     switch (label) {
         case Labels.Home.label:
             return Labels.Home
