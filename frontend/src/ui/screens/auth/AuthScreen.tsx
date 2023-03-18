@@ -17,7 +17,7 @@ const AuthScreen = () => {
 
     const toNotes = (user: User) => navigate(
         "/notes",
-        {state: user}
+        {replace:true}
     )
 
     return (
