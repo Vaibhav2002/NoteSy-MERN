@@ -46,7 +46,7 @@ const NotesScreen = () => {
     async function logout() {
         try {
             await logoutUser()
-            navigate("/auth")
+            navigate("/auth", { replace: true })
         } catch (error) {
             alert(error)
             console.log(error)
