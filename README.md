@@ -59,6 +59,7 @@ To clone this project and customize it further, you need to do a couple of tasks
     ```
     cd backend
     npm install
+    cd ..
     cd frontend
     npm install
     cd ..
