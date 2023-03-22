@@ -46,7 +46,7 @@ const HomeScreen = () => {
                         fontWeight="800"
                     >
                         All your notes. <br/>
-                        Oragnized. <br/>
+                        Organized. <br/>
                         Effortless.
                     </Typography>
 
