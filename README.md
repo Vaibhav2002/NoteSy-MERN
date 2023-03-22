@@ -1,6 +1,6 @@
 ![Notesy](graphics/NoteSy.gif)
 
-# **NoteSy** - All your notes. Oragnized. Effortless.
+# **NoteSy** - All your notes. Organized. Effortless.
 
 Inspiration strikes everywhere. **Notesy** lets you
 capture your ideas across any device.
@@ -57,6 +57,7 @@ To clone this project and customize it further, you need to do a couple of tasks
 4) Run the following commands in your terminal
 
     ```
+    cd backend
     npm install
     cd frontend
     npm install
