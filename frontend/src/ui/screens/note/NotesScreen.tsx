@@ -32,13 +32,14 @@ const NotesScreen = () => {
         dispatch(fetchNotes())
     }, [dispatch]);
 
+    useEffect(() => {
+        if (!errorMsg) return
+        console.log(errorMsg)
+        alert(errorMsg)
+    }, [errorMsg])
+
     async function onNoteDelete(noteId: string) {
-        try {
-            dispatch(deleteNote(noteId))
-        } catch (error) {
-            alert(error)
-            console.log(error)
-        }
+        dispatch(deleteNote(noteId))
     }
 
     async function logout() {
