@@ -6,8 +6,7 @@ import Status from "../../models/Status";
 export const fetchNotes = createAsyncThunk(
     "Notes/fetchNotes",
     async () => {
-        const response = await dataSoucre.getAllNotes()
-        return response
+        return await dataSoucre.getAllNotes()
     }
 )
 
@@ -20,6 +19,7 @@ export const fetchNoteReducer = (builder: ActionReducerMapBuilder<NotesState>) =
         state.notes = action.payload
     })
     builder.addCase(fetchNotes.rejected, (state, action) => {
+        state.status = Status.ERROR
         state.errorMsg = action.error.message
     })
 }

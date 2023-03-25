@@ -4,20 +4,21 @@ import {Controller, useForm} from "react-hook-form"
 import {Box, Button, FormControl, InputLabel, MenuItem, Modal, Select, Stack} from "@mui/material";
 import styles from './AddEditNoteModal.module.css'
 import Typography from "@mui/material/Typography";
-import {createNote, updateNote} from "../../../data/remote/NoteDataSource";
 import NoteInput from "./NoteInput";
 import Note from "../../../data/models/Note";
 import FormTextField from "../formComponents/FormTextFields";
+import {useDispatch} from "react-redux";
+import {updateNote} from "../../../data/redux/thunks/UpdateNoteThunk";
+import {AppDispatch} from "../../../data/redux/store";
+import {addNote} from "../../../data/redux/thunks/AddNoteThunk";
 
 interface AddEditNoteProps {
     note?: Note
     onDismiss: () => void
 
-    onNoteSave: (note: Note) => void
-
 }
 
-const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
+const AddEditNoteModal = ({note, onDismiss}: AddEditNoteProps) => {
     const {control, handleSubmit, formState: {errors, isSubmitting}} = useForm<NoteInput>({
         defaultValues: {
             title: note?.title ?? "",
@@ -26,17 +27,18 @@ const AddEditNoteModal = ({note, onDismiss, onNoteSave}: AddEditNoteProps) => {
         }
     })
 
+    const dispatch = useDispatch<AppDispatch>()
+
     let header = "Create Note"
     if (note) header = "Edit Note"
     const allLabels = labels
 
     const onSubmit = async (input: NoteInput) => {
-        let noteResponse
         try {
             if (note)
-                noteResponse = await updateNote(note._id, input)
-            else noteResponse = await createNote(input)
-            onNoteSave(noteResponse)
+                dispatch(updateNote({noteId: note._id, noteInput: input}))
+            else dispatch(addNote(input))
+            onDismiss()
         } catch (error) {
             console.log(error)
             alert(error)

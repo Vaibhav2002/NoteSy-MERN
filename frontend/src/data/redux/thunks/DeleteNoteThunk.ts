@@ -6,8 +6,8 @@ import Status from "../../models/Status";
 export const deleteNote = createAsyncThunk(
     "Notes/deleteNote",
     async (noteId: string) => {
-        const response = await dataSource.deleteNote(noteId)
-        return response
+        await dataSource.deleteNote(noteId)
+        return noteId
     }
 )
 
@@ -17,9 +17,11 @@ export const deleteNoteReducer = (builder: ActionReducerMapBuilder<NotesState>) 
     })
     builder.addCase(deleteNote.fulfilled, (state, action) => {
         state.status = Status.SUCCESS
-        state.notes.filter(note => note._id !== action.meta.arg)
+        const noteIndex = state.notes.findIndex(note => note._id === action.payload)
+        state.notes.splice(noteIndex, 1)
     })
     builder.addCase(deleteNote.rejected, (state, action) => {
+        state.status = Status.ERROR
         state.errorMsg = action.error.message
     })
 }

@@ -12,8 +12,7 @@ interface UpdateNoteData {
 export const updateNote = createAsyncThunk(
     "Notes/updateNote",
     async ({noteId, noteInput}: UpdateNoteData) => {
-        const response = await dataSource.updateNote(noteId, noteInput)
-        return response
+        return await dataSource.updateNote(noteId, noteInput)
     }
 )
 
@@ -27,6 +26,7 @@ export const updateNoteReducer = (builder: ActionReducerMapBuilder<NotesState>) 
         state.notes[noteIndex] = action.payload
     })
     builder.addCase(updateNote.rejected, (state, action) => {
+        state.status = Status.ERROR
         state.errorMsg = action.error.message
     })
 }
