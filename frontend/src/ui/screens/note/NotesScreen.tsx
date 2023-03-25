@@ -11,9 +11,17 @@ import NotesToolbar from "../../components/NoteScreenToolbar";
 import {logoutUser} from "../../../data/remote/AuthDataSource";
 import {useNavigate} from "react-router-dom";
 import Typography from "@mui/material/Typography";
+import {useDispatch, useSelector} from "react-redux";
+import Status from "../../../data/models/Status";
+import {AppDispatch} from "../../../data/redux/store";
+import {notesStateSelector} from "../../../data/redux/Selectors";
+import {fetchNotes} from "../../../data/redux/thunks/FetchNoteThunk";
+import {addNote, deleteNoteById, updateNote} from "../../../data/redux/NotesSlice";
 
 const NotesScreen = () => {
-    const [notes, setNotes] = useState<Note[]>([])
+    const {notes, errorMsg, status} = useSelector(notesStateSelector)
+    const dispatch = useDispatch<AppDispatch>()
+
     const [isModalOpen, setModalOpen] = useState(false)
     const [noteToEdit, setNoteToEdit] = useState<Note | undefined>(undefined)
     const [canDelete, setCanDelete] = useState(false)
@@ -22,26 +30,27 @@ const NotesScreen = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        async function loadNotes() {
-            try {
-                const notes = await NotesApi.getAllNotes()
-                setNotes(notes)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-
-        loadNotes()
-    }, []);
+        dispatch(fetchNotes())
+    }, [dispatch]);
 
     async function deleteNote(noteId: string) {
         try {
             await NotesApi.deleteNote(noteId)
-            setNotes(notes.filter(note => note._id !== noteId))
+            dispatch(deleteNoteById(noteId))
         } catch (error) {
             alert(error)
             console.log(error)
         }
+    }
+
+    const onNoteUpdated = (note: Note) => {
+        dispatch(updateNote(note))
+        setNoteToEdit(undefined)
+    }
+
+    const onNoteAdded = (note: Note) => {
+        setModalOpen(false)
+        dispatch(addNote(note))
     }
 
     async function logout() {
@@ -74,28 +83,29 @@ const NotesScreen = () => {
 
     const onDragEnd = () => setCanDelete(false)
 
-    const areThereNotes = notes.length !== 0
+    const notesGridComponent =
+        <Box p={2}>
+            <Grid
+                container
+                alignItems="flex-start"
+                justifyContent="space-evenly"
+                rowSpacing={2}
+                columnSpacing={1}
+                columns={{xs: 2, sm: 3, md: 4}}
+            >
+                {notes.map(note => (
+                    <Grid key={note._id}>
+                        <NoteItem
+                            note={note}
+                            onClick={setNoteToEdit}
+                            onDragStart={(e, note) => onDragStart(e, note._id)}
+                            onDragEnd={onDragEnd}
+                        />
+                    </Grid>
+                ))}
+            </Grid>
+        </Box>
 
-    const notesGrid =
-        <Grid
-            container
-            alignItems="flex-start"
-            justifyContent="space-evenly"
-            rowSpacing={2}
-            columnSpacing={1}
-            columns={{xs: 2, sm: 3, md: 4}}
-        >
-            {notes.map(note => (
-                <Grid key={note._id}>
-                    <NoteItem
-                        note={note}
-                        onClick={setNoteToEdit}
-                        onDragStart={(e, note) => onDragStart(e, note._id)}
-                        onDragEnd={onDragEnd}
-                    />
-                </Grid>
-            ))}
-        </Grid>
 
     const noNotesText = <Typography variant="h5" className={styles.noNotesText}>
         You don't have any notes.<br/> Add a new note by clicking the + button below.
@@ -106,25 +116,18 @@ const NotesScreen = () => {
             <NotesToolbar onLogoutPressed={logout}/>
             <Box>
 
-                {areThereNotes ? <Box p={2}>{notesGrid}</Box> : noNotesText}
+                {status == Status.SUCCESS && notes.length === 0 && noNotesText}
+                {status == Status.SUCCESS && notes.length > 0 && notesGridComponent}
 
                 {isModalOpen && <AddEditNoteModal
-                    onNoteSave={note => {
-                        setModalOpen(false)
-                        setNotes([...notes, note]);
-                    }
-                    }
+                    onNoteSave={onNoteAdded}
                     onDismiss={() => setModalOpen(false)}
                 />
                 }
 
                 {noteToEdit && <AddEditNoteModal
                     note={noteToEdit}
-                    onNoteSave={newNote => {
-                        setNotes(notes.map(note => (note._id === newNote._id) ? newNote : note))
-                        setNoteToEdit(undefined)
-                    }
-                    }
+                    onNoteSave={onNoteUpdated}
                     onDismiss={() => setNoteToEdit(undefined)}
                 />
                 }
@@ -148,9 +151,7 @@ const NotesScreen = () => {
                     onDrop={onDrop}
                     onDragOver={onDragOverDelete}
                     onDragLeave={onDragOffDelete}
-                    size={
-                        isHoveringOnDelete ? "large" : "medium"
-                    }
+                    size={isHoveringOnDelete ? "large" : "medium"}
                     sx={{
                         zIndex: 5,
                         position: "fixed",
