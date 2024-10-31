@@ -20,6 +20,39 @@ const RegisterForm = ({onRegisterSuccess, onMoveToLogin}: RegisterProps) => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const onSubmit = async (credentials: RegisterCredentials) => {
+
+        const matchpassword = []
+
+        matchpassword.push("[$@$!%*#?&]");
+        matchpassword.push("[A-Z]");
+        matchpassword.push("[a-z]");
+        matchpassword.push("[0-9]");
+
+        if(credentials.password.length<8) {
+            setErrorMessage ( "password must be of 8 character" )
+            return
+        }
+
+        for (let i   = 0  ; i < matchpassword.length ; i++){
+            if (!RegExp(matchpassword[i]).test(String(credentials.password))){
+                switch (i){
+                    case 0:
+                        setErrorMessage ( "Password must contains a special character" );
+                        return ;
+                    case 1:
+                        setErrorMessage ( "Password must contains at least a capital letter" );
+                        return ;
+                    case 2:
+                        setErrorMessage ( "Password must contains at least a small letter" );
+                        return ;
+                    case 3:
+                        setErrorMessage ( "Password must contains a number" );
+                        return ;
+                }
+            }
+        }
+
+
         try {
             const user = await AuthApi.registerUser(credentials)
             onRegisterSuccess(user)
